@@ -32,7 +32,7 @@ return {
             builtin.grep_string({ search = vim.fn.input("Grep >> ") })
         end, { desc = "Grep for string" })
 
-        vim.keymap.set('n', '<leader>vh', builtin.help_tags, 
+        vim.keymap.set('n', '<leader>ph', builtin.help_tags, 
             { desc = "Search Help Tags" }
         )
     end

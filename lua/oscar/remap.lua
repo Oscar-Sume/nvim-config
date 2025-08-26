@@ -6,12 +6,13 @@ vim.keymap.set("n", "<leader>wo", [[:w | :so <CR>]], { desc = "Save & Source" })
 
 -- <leader>pv opens netrw explorer---------------------------------------------
 vim.keymap.set("n", "<leader>pv", vim.cmd.Explore, { desc = "Open Explorer" })
-
 -- <leader>p paste replaces without yanking replaced text ---------------------
+
 vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Paste no-Yank" })
 
 -- <leader>d deletes without yanking ------------------------------------------
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]], { desc = "Delete no-Yank" })
+
 
 -- J,K move lines vertically in visual mode -----------------------------------
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
@@ -22,11 +23,13 @@ vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank Clipboard" })
 vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "Yank Line Clipboard" })
 
+
 -- <leader>f Finds all occurences and lets you edit ---------------------------
 -- vim.keymap.set("n", "<leader>s",
 --     ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>",
 --     { desc = "Find all & Replace" }
 -- )
+--
 --
 -- <leader>x Shell command to make current file executable ---------------------
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>",
@@ -45,6 +48,7 @@ vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz", { desc = "Prev LOC" })
 
 -- J concats lines WITHOUT moving curser --------------------------------------
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Concat Still-Cursor" })
+
 -- C-d, C-u center screen each time -------------------------------------------
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
@@ -61,24 +65,27 @@ vim.keymap.set("n", "Q", [[<nop>]])
 --
 -- vim.keymap.set("n", "<leader>mo", ":noautocmd MoltenEnterOutput<CR>", { desc = "open output window", silent = true })
 -- vim.keymap.set("n", "<leader>mh", ":MoltenHideOutput<CR>", { desc = "close output window", silent = true })
--- vim.keymap.set("n", "<leader>md", ":MoltenDelete<CR>", { desc = "delete Molten cell", silent = true })
+-- vim.keymap.set("n", "<leader>md", ":MoltenDele {}te<CR>", { desc = "delete Molten cell", silent = true })
 -- vim.keymap.set("n", "<leader>mx", ":MoltenOpenInBrowser<CR>", { desc = "open output in browser", silent = true })
 
 
 
 -- Quarto Maps -----------------------------------------------------------------
-local runner = require("quarto.runner")
-vim.keymap.set("n", "<leader>rc", runner.run_cell, { desc = "run cell", silent = true })
-vim.keymap.set("n", "<leader>mra", runner.run_above, { desc = "run cell and above", silent = true })
-vim.keymap.set("n", "<leader>mrA", runner.run_all, { desc = "run all cells", silent = true })
-vim.keymap.set("n", "<leader>rl", runner.run_line, { desc = "run line", silent = true })
-vim.keymap.set("v", "<leader>mrr", runner.run_range, { desc = "run visual range", silent = true })
-
-vim.keymap.set("n", "<leader>RA", function()
-    runner.run_all(true)
-end, { desc = "run all cells of all languages", silent = true })
-
+--
+-- local runner = require("quarto.runner")
+-- vim.keymap.set("n", "<leader>rc", runner.run_cell, { desc = "run cell", silent = true })
+-- vim.keymap.set("n", "<leader>mra", runner.run_above, { desc = "run cell and above", silent = true })
+-- vim.keymap.set("n", "<leader>mrA", runner.run_all, { desc = "run all cells", silent = true })
+-- vim.keymap.set("n", "<leader>rl", runner.run_line, { desc = "run line", silent = true })
+-- vim.keymap.set("v", "<leader>mrr", runner.run_range, { desc = "run visual range", silent = true })
+--
+-- vim.keymap.set("n", "<leader>RA", function()
+--     runner.run_all(true)
+-- end, { desc = "run all cells of all languages", silent = true })
+--
 -- LSP Buffer Maps -------------------------------------------------------------
+
+
 vim.api.nvim_create_autocmd('LspAttach', {
     desc = 'LSP actions',
     callback = function(event)
@@ -88,18 +95,36 @@ vim.api.nvim_create_autocmd('LspAttach', {
             vim.keymap.set(mode, lhs, rhs, vim.tbl_extend("force", opts, { desc = desc }))
         end
         map("n", "K", vim.lsp.buf.hover, "Hover Docs")
-        map("n", "gd", vim.lsp.buf.definition, "Go to Definition")
-        map("n", "gD", vim.lsp.buf.declaration, "Go to Declaration")
-        map("n", "gi", vim.lsp.buf.implementation, "Go to Implementation")
-        map("n", "go", vim.lsp.buf.type_definition, "Go to Type Def")
-        map("n", "gr", vim.lsp.buf.references, "References")
-        map("n", "gs", vim.lsp.buf.signature_help, "Signature Help")
+        map("n", "<leader>gd", vim.lsp.buf.definition, "Go to Definition")
+        map("n", "<leader>gD", vim.lsp.buf.declaration, "Go to Declaration")
+        map("n", "<leader>gi", vim.lsp.buf.implementation, "Go to Implementation")
+        map("n", "<leader>go", vim.lsp.buf.type_definition, "Go to Type Def")
+        map("n", "<leader>gr", vim.lsp.buf.references, "References")
+        map("n", "<leader>gs", vim.lsp.buf.signature_help, "Signature Help")
         map("n", "<F2>", vim.lsp.buf.rename, "Rename Symbol")
         map("n", "<F4>", vim.lsp.buf.code_action, "Code Action")
 
         -- new auto format
-        map({ "n", "v" }, "<leader>f", function()
+        map({ "n", "v" }, "<leader>hf", function()
             vim.lsp.buf.format({ async = true })
         end, "Format (LSP)")
     end,
 })
+
+
+
+vim.keymap.set("n", "<leader>wp", "<cmd>TSPlaygroundToggle<CR>", { desc = "TS: Playground toggle" })
+vim.keymap.set("n", "<leader>wc", "<cmd>TSHighlightCapturesUnderCursor<CR>", { desc = "TS: Captures under cursor" })
+vim.keymap.set("n", "<leader>wi", "<cmd>Inspect<CR>", { desc = "TS: Inspect highlight" })
+
+vim.keymap.set('n', '<leader>wr', function()
+    vim.opt.relativenumber = not vim.opt.relativenumber:get()
+end, { noremap = true, silent = true, desc = "Toggle Relative Line Nums" })
+
+-- Toggle Quickfix window
+vim.keymap.set("n", "<leader>wq", "<cmd>execute getqflist({'winid':1}).winid > 0 ? 'cclose' : 'copen'<CR>",
+    { desc = "View: Quickfix toggle" })
+
+-- Toggle Location list (current window)
+vim.keymap.set("n", "<leader>wl", "<cmd>execute getloclist(0, {'winid':1}).winid > 0 ? 'lclose' : 'lopen'<CR>",
+    { desc = "View: location list toggle" })

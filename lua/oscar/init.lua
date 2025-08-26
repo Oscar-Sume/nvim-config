@@ -1,4 +1,9 @@
+-- init.lua (second init.lua inside folder)
 vim.g.mapleader = " "
+
+
+
+
 
 
 require("oscar.lazy_init")
@@ -24,13 +29,43 @@ vim.g.netrw_winsize = 25
 
 
 --------------------------------------------------------------------------------
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "*.md",
+  callback = function()
+    local events = {
+      "TextChanged", "TextChangedI", "CursorMovedI", "InsertLeave", "InsertEnter",
+      "CursorHoldI", "CompleteDone"
+    }
+
+    for _, event in ipairs(events) do
+      local aucmds = vim.api.nvim_get_autocmds({ event = event, buffer = 0 })
+      for _, aucmd in ipairs(aucmds) do
+        if aucmd.desc and aucmd.desc:match("vim.snippet") then
+          vim.api.nvim_del_autocmd(aucmd.id)
+        end
+      end
+    end
+
+    -- Clean up snippet extmarks too
+    pcall(function()
+      local ns = vim.api.nvim_get_namespaces()["vim.snippet"]
+      if ns then
+        vim.api.nvim_buf_clear_namespace(0, ns, 0, -1)
+      end
+    end)
+  end,
+})
+
+vim.snippet = nil
+
+local luasnip = require("luasnip")
 require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/lua/oscar/snippets/" })
 
 require("luasnip").config.set_config({
+    history = true,
     enable_autosnippets = true,
     store_selection_keys = "<Tab>",
 })
-
 
 --------------------------------------------------------------------------------
 

@@ -4,9 +4,6 @@
 -- Setting rel line numbers -----------------------------------------------------------------
 vim.opt.nu = true
 vim.opt.relativenumber = true
-vim.keymap.set('n', '<leader>rn', function()
-    vim.opt.relativenumber = not vim.opt.relativenumber:get()
-end, { noremap = true, silent = true, desc = "Toggle Relative Line Nums" })
 ---------------------------------------------------------------------------------------------
 
 
@@ -32,6 +29,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 ---------------------------------------------------------------------------------------------
 
+vim.opt.clipboard = "unnamedplus"
 
 -- other changes --------------------------------------------------------------------
 vim.opt.wrap = false
@@ -45,7 +43,6 @@ vim.opt.updatetime = 50
 ---
 ---
 vim.opt.colorcolumn = "81"
-
 
 
 

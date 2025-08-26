@@ -1,4 +1,5 @@
 return {
+    --[[
     "OXY2DEV/markview.nvim",
     lazy = false,
     dependencies = {
@@ -17,12 +18,14 @@ return {
         require("markview").setup({
             preview = {
                 enable = true,
+                enable_hybrid_mode = true,
                 filetypes = { "markdown", "md", "rmd", "quarto" },
                 ignore_buftypes = {"nofile"},
                 modes = { "n", "i", "no", "c" },
                 hybrid_modes = { "n", "i" },
                 linewise_hybrid_mode = true,
-                icon_provider = "internal",
+                icon_provider = "nvim-web-devicons",
+
             },
             markdown = {
                 headings = {
@@ -53,7 +56,7 @@ return {
                             type = "repeating",
                             repeat_amount = function(_) return 80 end,
                             text = "-",
-                            --- hl = "MarkviewCodeFg",
+                            hl = "markviewBlockQuoteDefault",
                         }
                     },
                 }
@@ -133,4 +136,5 @@ return {
 
         -----------------------------------------------------------------------
     end,
+    ]]
 };

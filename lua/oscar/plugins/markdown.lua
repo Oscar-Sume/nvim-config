@@ -1,4 +1,5 @@
 return {
+    --[=[
     "tadmccorkle/markdown.nvim",
     ft = "markdown",
     config = function()
@@ -65,4 +66,6 @@ return {
                 on_attach = nil, -- (fun(bufnr: integer)) callback when plugin attaches to a buffer
         })
     end,
+
+    ]=]
 }
